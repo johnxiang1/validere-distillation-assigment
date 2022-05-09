@@ -10,7 +10,7 @@ Scripts for collecting distillation profile recent data from [Crude Monitor](htt
 
 ```
 git clone https://github.com/johnxiang1/validere-distillation-assigment.git
-pip install - r requirements.txt
+pip install -r requirements.txt
 python Extract_Recent_Crude_Distillation_Data.py
 python Blend_Two_Crude_Oils.py
 ```
