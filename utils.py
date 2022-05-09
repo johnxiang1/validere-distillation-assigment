@@ -63,6 +63,10 @@ def get_distillation_as_df(acronym):
 
     return df
 
+def weighted_average_distillation_model(v1, v2, temperature1, temperature2):
+    average_temp = (temperature1 * v1 + temperature2 * v2) / (v1 + v2)
+    return average_temp
+
 def distillation_model(v1=2, v2=2, oil1="BCL", oil2="OSH", dictionary=True):
     final_df = pd.DataFrame(columns=["Mass_%_Recovered", "Temperature", "Average", "Standard_Deviation"])
     for acronym in [oil1, oil2]:
@@ -72,7 +76,7 @@ def distillation_model(v1=2, v2=2, oil1="BCL", oil2="OSH", dictionary=True):
     temperature1 = final_df[final_df["Acronym"] == oil1]["Temperature"]
     temperature2 = final_df[final_df["Acronym"] == oil2]["Temperature"]
 
-    average_temp = (temperature1 * v1 + temperature2 * v2) / (v1 + v2)
+    average_temp = weighted_average_distillation_model(v1, v2, temperature1, temperature2)
 
     result_df = pd.concat([final_df[final_df["Acronym"] == oil1]["Mass_%_Recovered"] + "%", average_temp], axis=1)
 
@@ -80,3 +84,21 @@ def distillation_model(v1=2, v2=2, oil1="BCL", oil2="OSH", dictionary=True):
         return result_df.set_index("Mass_%_Recovered").to_dict()["Temperature"]
     else:
         return result_df
+
+def get_numeric_input(oil1, oil2):
+    while True:
+      try:
+         vol1 = float(input(f"Enter volume of {oil1.upper()}: "))
+         vol2 = float(input(f"Enter volume of {oil2.upper()}: "))
+         if vol1 < 0 or vol2 < 0:
+             print("input must be a positive number, try again")
+             continue
+         elif vol1 ==0 and vol2 ==0:
+             print("both volume cannot be 0")
+             continue
+      except ValueError:
+         print("Not a valid number!")
+         continue
+      else:
+         break
+    return vol1, vol2
