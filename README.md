@@ -2,7 +2,7 @@
 
 Scripts for collecting distillation profile recent data from [Crude Monitor](https://www.crudemonitor.ca/home.php) and generating distillation profile of the mixture of two oils with specified volume
 
-#Installation
+# Installation
 1. Clone this repository
 2. Install the Python requirements
 3. Run Extract_Recent_Crude_Distillation_Data
